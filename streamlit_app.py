@@ -19,7 +19,7 @@ st.sidebar.subheader('Created by: **_Sarang Bagul_**')
 st.header('Welcome to LLM Pair Programming :desktop_computer:')
 # st.subheader('Select your coding operation:')
 
-radio = st.radio('Select your coding operation:', ["Improve existing code", "Simplify Code", "Write Test Cases",
+radio = st.radio('Select your coding operation:', ["Generate Code", "Improve existing code", "Simplify Code", "Write Test Cases",
                                              "Make Code More efficient", "Debug your Code"])
 if user_api_key:
     # Pick the model that generates text
@@ -32,7 +32,17 @@ if user_api_key:
     def generate_text(prompt, model=model_bison, temperature=0.0):
         return palm.generate_text(prompt=prompt, model=model, temperature=temperature)
     
-    if radio == "Improve existing code":
+    if radio == "Generate Code":
+        # Prompt for Scenario 1: Improve existing code
+        prompt_template = """
+        You are an expert at writing clear, concise, Python code.
+    
+        {question}
+    
+        Insert comments for each line of code.
+        """
+    
+    elif radio == "Improve existing code":
         # Prompt for Scenario 1: Improve existing code
         prompt_template = """
         I don't think this code is the best way to do it in Python, can you help me?

@@ -1,15 +1,11 @@
-#  Fine-Tuned LLM for Custom Data  
+#  Pair Programming using LLM  
 ```
-Created a Fine-tuned LLM model for question answering on custom data.   
+Created an app for Pair Programming using LLM model for coding operations.   
 ```
 
 ## Pre-requisites:
 - Python
-- Account with Streamlit
-- HuggingFace API key
-- Langchain package and dependencies
-- chromadb
-- HuggingFace model "google/flan-t5-xxl"
+- PaLM API
 
 ## Demo:
 ![streamlit-streamlit_app-2023-09-16-23-09-12](https://github.com/sarangb0003/Fine-Tuned-LLM-for-Custom-Data/assets/61322867/fa6f8486-7c7c-423c-be1b-b1c05bc55fa0)

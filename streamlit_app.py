@@ -88,7 +88,7 @@ if user_api_key:
     else:
         # Prompt for Scenario 5: Debug your code
         prompt_template = """
-        Can you please help me to debug this code? If code is right then just say no error in the code
+        Can you please help me to debug this code?
     
         {question}
     

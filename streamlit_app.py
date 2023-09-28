@@ -1,11 +1,11 @@
-import streamlit as st
-from streamlit_chat import message
+# Importing Libraries
+import google.generativeai as palm
+from google.api_core import client_options as client_options_lib
 
-repo_id = "google/flan-t5-xxl"
+palm.configure(api_key=api_key_ID,transport="rest")
 
 st.set_page_config(page_title="LLM Pair Programming") 
-
-st.sidebar.title('Welcome to LLM Pair Programming 🤗')
+st.sidebar.title('Welcome to LLM Pair Programming')
 
 # App title
 user_api_key = st.sidebar.text_input(
@@ -13,83 +13,80 @@ user_api_key = st.sidebar.text_input(
     placeholder="Paste your PaLM API key",
     type="password")
 
-
-# selectbox = st.sidebar.selectbox("Select file type",("PDF", "CSV"))
-
-# if selectbox == "PDF":
-#     uploaded_file = st.sidebar.file_uploader("upload", type="pdf")
-# else:
-#     uploaded_file = st.sidebar.file_uploader("upload", type="csv")
-
-uploaded_file = st.sidebar.file_uploader("upload", type="pdf")
-
-# st.sidebar.caption('**Creared by: Sarang Bagul**')
-# st.sidebar.subheader('_Streamlit_ is :blue[cool] :sunglasses:')
 st.sidebar.subheader('Created by: **_Sarang Bagul_**')
 
+radio = st.radio("Select your operation",["Improve existing code", "Simplify Code", "Write Test Cases",
+                                             "Make Code More efficient", "Debug your Code"])
 
-if uploaded_file :
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        tmp_file_path = tmp_file.name
-        
-    # if selectbox == "PDF":
-    #     loader = PyPDFLoader(file_path=tmp_file_path)
-    # else:
-    #     loader = CSVLoader(file_path=tmp_file_path, encoding="utf-8")
+# Pick the model that generates text
+models = [m for m in palm.list_models() if 'generateText' in m.supported_generation_methods]
+model_bison = models[0]
 
-    loader = PyPDFLoader(file_path=tmp_file_path)
-    documents = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
-    docs = text_splitter.split_documents(documents)
-    
-    embeddings = HuggingFaceInferenceAPIEmbeddings(api_key=user_api_key )
-    
-    try:
-        vectors = Chroma.from_documents(documents=docs, embedding=embeddings)
-    except InvalidDimensionException:
-        Chroma().delete_collection()
-        vectors = Chroma.from_documents(documents=docs, embedding=embeddings)
-    
-    retriever = vectors.as_retriever()
-    
-    llm = HuggingFaceHub(huggingfacehub_api_token=user_api_key, repo_id=repo_id, model_kwargs={"temperature": 0.1})
-    
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+# Helper function to call the PaLM API
+from google.api_core import retry
+@retry.Retry()
+def generate_text(prompt, model=model_bison, temperature=0.0):
+    return palm.generate_text(prompt=prompt, model=model, temperature=temperature)
 
-    chain = ConversationalRetrievalChain.from_llm(llm = llm, retriever=retriever, memory=memory)
-    
-    
-    def conversational_chat(query):
-        
-        result = chain({"question": query})#, "chat_history": st.session_state['history']})
-#         st.session_state['history'].append((query, result["answer"]))
-        
-        return result["answer"]
-    
-#     if 'history' not in st.session_state:
-#         st.session_state['history'] = []
+if radio == "Improve existing code":
+    # Prompt for Scenario 1: Improve existing code
+    prompt_template = """
+    I don't think this code is the best way to do it in Python, can you help me?
 
-    if "messages" not in st.session_state.keys():
-        st.session_state.messages = [{"role": "assistant", "content": "Welcome to LLM Q&A bot Assistant 🤗. How can I help you ?"}]
-    
-    # Display chat messages
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.write(message["content"])
+    {question}
 
+    Please explore multiple ways of solving the problem, 
+    and tell me which is the most Pythonic
+    """
 
-    # User-provided prompt
-    if prompt := st.chat_input():
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.write(prompt)
+elif radio == "Simplify Code":
+    # Prompt for Scenario 2: Simplify code
+    prompt_template = """
+    Can you please simplify this code in Python? \n
+    You are an expert in Pythonic code.
 
-    # Generate a new response if last message is not from assistant
-    if st.session_state.messages[-1]["role"] != "assistant":
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                response = conversational_chat(prompt) 
-                st.write(response) 
-        message = {"role": "assistant", "content": response}
-        st.session_state.messages.append(message) 
+    {question}
+
+    Please comment each line in detail, \n
+    and explain in detail what you did to modify it, and why.
+    """
+
+elif radio == "Write Test Cases":
+    # Prompt for Scenario 3: Write test cases
+    prompt_template = """
+    Can you please create test cases in code for this Python code?
+
+    {question}
+
+    Explain in detail what these test cases are designed to achieve.
+    """
+
+elif radio == "Make Code More efficient":
+    # Prompt for Scenario 4: Make code more efficient
+    prompt_template = """
+    Can you please make this code more efficient?
+
+    {question}
+
+    Explain in detail what you changed and why.
+    """
+
+else:
+    # Prompt for Scenario 5: Debug your code
+    prompt_template = """
+    Can you please help me to debug this code?
+
+    {question}
+
+    Explain in detail what you found and why it was a bug in pythonic way.
+    """
+
+txt = st.text_area(question, )
+
+# Complete Answer
+completion = generate_text(
+    prompt = prompt_template.format(question=question)
+)
+
+if st.button("Result"):
+    st.write(completion.result)

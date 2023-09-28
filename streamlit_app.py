@@ -56,7 +56,7 @@ if user_api_key:
     elif radio == "Simplify Code":
         # Prompt for Scenario 2: Simplify code
         prompt_template = """
-        Can you please simplify this code in Python? Write it with list of imported libraries if needed \n
+        Can you please simplify this code in Python? \n
         You are an expert in Pythonic code. 
     
         {question}

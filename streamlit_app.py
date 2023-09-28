@@ -50,7 +50,7 @@ if user_api_key:
         {question}
     
         Please explore multiple ways of solving the problem, 
-        and tell me which is the most Pythonic
+        and tell me which is the most Pythonic and memory efficient
         """
     
     elif radio == "Simplify Code":

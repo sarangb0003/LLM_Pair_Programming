@@ -86,7 +86,7 @@ else:
     """
 
 question = """ """
-txt = st.text_area("Paste your code:", question, )
+txt = st.text_area("Paste your code:", question, height=2000)
 
 # Complete Answer
 completion = generate_text(

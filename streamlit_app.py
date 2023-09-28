@@ -19,7 +19,7 @@ st.sidebar.subheader('Created by: **_Sarang Bagul_**')
 st.header('Welcome to LLM Pair Programming :desktop_computer:')
 st.subheader('Select your coding operation:')
 
-radio = st.radio(options=["Improve existing code", "Simplify Code", "Write Test Cases",
+radio = st.radio('Select your coding operation:', ["Improve existing code", "Simplify Code", "Write Test Cases",
                                              "Make Code More efficient", "Debug your Code"])
 
 # Pick the model that generates text

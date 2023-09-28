@@ -82,6 +82,7 @@ else:
     Explain in detail what you found and why it was a bug in pythonic way.
     """
 
+question = """ """
 txt = st.text_area(question, )
 
 # Complete Answer

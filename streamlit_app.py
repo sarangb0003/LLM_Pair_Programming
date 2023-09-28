@@ -4,7 +4,7 @@ import google.generativeai as palm
 from google.api_core import client_options as client_options_lib
 
 st.set_page_config(page_title="LLM Pair Programming") 
-st.sidebar.title('Welcome to LLM Pair Programming')
+st.sidebar.title('Pair Programming using LLM')
 
 # App title
 user_api_key = st.sidebar.text_input(

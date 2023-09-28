@@ -1,7 +1,1 @@
-langchain
-pypdf
-streamlit
-streamlit-chat
-tiktoken
-chromadb == 0.3.29
-pandas == 0.22.0
+google.generativeai

@@ -20,7 +20,7 @@ st.header('Welcome to LLM Pair Programming :desktop_computer:')
 # st.subheader('Select your coding operation:')
 
 radio = st.radio('Select your coding operation:', ["Generate Code", "Improve existing code", "Simplify Code", "Write Test Cases",
-                                             "Make Code More efficient", "Debug your Code"])
+                                             "Debug your Code"])
 if user_api_key:
     # Pick the model that generates text
     models = [m for m in palm.list_models() if 'generateText' in m.supported_generation_methods]
@@ -45,19 +45,19 @@ if user_api_key:
     elif radio == "Improve existing code":
         # Prompt for Scenario 1: Improve existing code
         prompt_template = """
-        I don't think this code is the best way to do it in Python, can you help me?
+        I don't think this code is the best way to do it in Python, can you help me? Write it with list of imported libraries if needed.
     
         {question}
     
         Please explore multiple ways of solving the problem, 
-        and tell me which is the most Pythonic and memory efficient
+        and tell me which is the most Pythonic
         """
     
     elif radio == "Simplify Code":
         # Prompt for Scenario 2: Simplify code
         prompt_template = """
         Can you please simplify this code in Python? \n
-        You are an expert in Pythonic code.
+        You are an expert in Pythonic code. Write it with list of imported libraries if needed.
     
         {question}
     
@@ -68,22 +68,22 @@ if user_api_key:
     elif radio == "Write Test Cases":
         # Prompt for Scenario 3: Write test cases
         prompt_template = """
-        Can you please create test cases in code for this Python code?
+        Can you please create test cases in code for this Python code? Write it with list of imported libraries if needed.
     
         {question}
     
         Explain in detail what these test cases are designed to achieve.
         """
     
-    elif radio == "Make Code More efficient":
-        # Prompt for Scenario 4: Make code more efficient
-        prompt_template = """
-        Can you please make this code more efficient?
+    # elif radio == "Make Code More efficient":
+    #     # Prompt for Scenario 4: Make code more efficient
+    #     prompt_template = """
+    #     Can you please make this code more efficient?
     
-        {question}
+    #     {question}
     
-        Explain in detail what you changed and why.
-        """
+    #     Explain in detail what you changed and why.
+    #     """
     
     else:
         # Prompt for Scenario 5: Debug your code

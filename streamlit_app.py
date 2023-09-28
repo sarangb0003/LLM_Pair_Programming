@@ -35,7 +35,7 @@ if user_api_key:
     if radio == "Generate Code":
         # Prompt for Scenario 1: Improve existing code
         prompt_template = """
-        You are an expert at writing clear, concise, Python code.
+        You are an expert at writing clear, concise, Python code. Write it with list of imported libraries if needed.
     
         {question}
     
@@ -88,7 +88,7 @@ if user_api_key:
     else:
         # Prompt for Scenario 5: Debug your code
         prompt_template = """
-        Can you please help me to debug this code?
+        Can you please help me to debug this code? Write it with list of imported libraries if needed.
     
         {question}
     

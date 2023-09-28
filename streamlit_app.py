@@ -2,8 +2,6 @@
 import google.generativeai as palm
 from google.api_core import client_options as client_options_lib
 
-palm.configure(api_key=api_key_ID,transport="rest")
-
 st.set_page_config(page_title="LLM Pair Programming") 
 st.sidebar.title('Welcome to LLM Pair Programming')
 
@@ -12,6 +10,8 @@ user_api_key = st.sidebar.text_input(
     label="#### Your PaLM API key 👇",
     placeholder="Paste your PaLM API key",
     type="password")
+
+palm.configure(api_key=user_api_key, transport="rest")
 
 st.sidebar.subheader('Created by: **_Sarang Bagul_**')
 

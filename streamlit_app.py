@@ -17,7 +17,7 @@ palm.configure(api_key=user_api_key, transport="rest")
 st.sidebar.subheader('Created by: **_Sarang Bagul_**')
 
 st.header('Welcome to LLM Pair Programming :desktop_computer:')
-st.subheader('Select your coding operation:')
+# st.subheader('Select your coding operation:')
 
 radio = st.radio('Select your coding operation:', ["Improve existing code", "Simplify Code", "Write Test Cases",
                                              "Make Code More efficient", "Debug your Code"])

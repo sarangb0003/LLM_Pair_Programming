@@ -1,29 +1,16 @@
 import streamlit as st
 from streamlit_chat import message
-from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
-from langchain.memory import ConversationBufferMemory
-
-from langchain import HuggingFaceHub
-from langchain.chains import ConversationalRetrievalChain,RetrievalQA
-from langchain.document_loaders import PyPDFLoader,CSVLoader
-from langchain.vectorstores import Chroma
-import tempfile
-
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.memory import ConversationBufferMemory
-from chromadb.errors import InvalidDimensionException
 
 repo_id = "google/flan-t5-xxl"
-# repo_id = "tiiuae/falcon-40b"
 
-st.set_page_config(page_title="Fine Tuned LLM Chatbot") 
+st.set_page_config(page_title="LLM Pair Programming") 
 
-st.sidebar.title('Fine-Tuned LLM Question Answering Chatbot 🤗')
+st.sidebar.title('Welcome to LLM Pair Programming 🤗')
 
 # App title
 user_api_key = st.sidebar.text_input(
-    label="#### Your HuggingFaceHub API key 👇",
-    placeholder="Paste your HuggingFaceHub API key",
+    label="#### Your PaLM API key 👇",
+    placeholder="Paste your PaLM API key",
     type="password")
 
 

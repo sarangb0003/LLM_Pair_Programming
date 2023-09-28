@@ -86,7 +86,7 @@ txt = st.text_area(question, )
 
 # Complete Answer
 completion = generate_text(
-    prompt = prompt_template.format(question=question)
+    prompt = prompt_template.format(question=txt)
 )
 
 if st.button("Result"):

@@ -10,10 +10,6 @@ improve, simplify or debug on existing Python Code.
 
 ## Demo:
 ![streamlit-streamlit_app-2023-09-29-10-09-37](https://github.com/sarangb0003/LLM_Pair_Programming/assets/61322867/70e1afc0-314f-4e57-8c5d-5fdb715bd206)
-
-
-## Input data used in Demo:
-[text_London_information.pdf](https://github.com/sarangb0003/Fine-Tuned-LLM-for-Custom-Data/files/12642305/text_London_information.pdf)
 <br>
 
 ## Details:
